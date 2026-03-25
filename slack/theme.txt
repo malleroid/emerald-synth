@@ -1,0 +1,8 @@
+# Slack Custom Theme
+#
+# Settings > Appearance > Custom theme
+
+# System navigation:  #150530
+# Selected items:     #00ffcc
+# Presence indication:#00ffcc
+# Notifications:      #ff2a6d
