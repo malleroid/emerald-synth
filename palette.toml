@@ -1,0 +1,38 @@
+# Emerald Synth — Color Palette
+# Single source of truth for all theme formats
+
+[meta]
+name = "Emerald Synth"
+author = "malleroid"
+variant = "dark"
+
+# ── Core ──────────────────────────────────────────────
+
+[core]
+bg = "#0d0221"
+fg = "#f0e6ff"
+
+[core.bg_shades]
+darkest  = "#0a0118"
+dark     = "#0d0221"
+medium   = "#150530"
+
+[core.fg_shades]
+main     = "#f0e6ff"
+dim      = "#60e0d0"
+
+# ── Accent ────────────────────────────────────────────
+
+[accent]
+primary       = "#00ffcc"
+primary_dim   = "rgba(0, 255, 204, 0.25)"
+primary_text  = "#40ffdd"
+foreground    = "#0d0221"
+border        = "#00d4aa"
+
+# ── Semantic ──────────────────────────────────────────
+
+[semantic]
+success = "#00ffcc"
+warning = "#ff2a6d"
+error   = "#ff2a6d"
