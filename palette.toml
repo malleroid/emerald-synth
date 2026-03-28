@@ -9,8 +9,17 @@ variant = "dark"
 # ── Core ──────────────────────────────────────────────
 
 [core]
-bg = "#0d0221"
-fg = "#f0e6ff"
+bg        = "#0d0221"
+fg        = "#f0e6ff"
+cursor    = "#00ffcc"
+cursor_text = "#0d0221"
+selection_fg = "#f0e6ff"
+selection_bg = "#1a3d35"
+split_divider = "#4a3565"
+search_fg = "#ffcc66"
+search_bg = "#4a3800"
+search_selected_fg = "#0d0221"
+search_selected_bg = "#ff5c8a"
 
 [core.bg_shades]
 darkest  = "#0a0118"
@@ -36,3 +45,24 @@ border        = "#00d4aa"
 success = "#00ffcc"
 warning = "#ff2a6d"
 error   = "#ff2a6d"
+
+# ── ANSI 16 ──────────────────────────────────────────
+
+[ansi]
+black          = "#0a0118"
+red            = "#ff2a6d"
+green          = "#00ffcc"
+yellow         = "#ffcc66"
+blue           = "#8b9cf7"
+magenta        = "#ff79c6"
+cyan           = "#4dd0e1"
+white          = "#f0e6ff"
+
+bright_black   = "#6a5585"
+bright_red     = "#ff5c8a"
+bright_green   = "#40ffdd"
+bright_yellow  = "#ffe099"
+bright_blue    = "#b0b8fc"
+bright_magenta = "#ff9ed0"
+bright_cyan    = "#7ee0ec"
+bright_white   = "#ffffff"
