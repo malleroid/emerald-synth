@@ -16,6 +16,26 @@ Full palette definition: [`palette.toml`](palette.toml)
 
 ## Supported Tools
 
+### Ghostty
+
+Terminal theme with ANSI 16 colors, cursor/selection, search highlighting, and split-divider.
+
+**Install:**
+```sh
+ln -s /path/to/emerald-synth/ghostty/emerald-synth ~/.config/ghostty/themes/emerald-synth
+```
+Then add `theme = emerald-synth` to `~/.config/ghostty/config`.
+
+### Zellij
+
+Terminal multiplexer theme (KDL format, new component-based spec).
+
+**Install:**
+```sh
+cp zellij/emerald-synth.kdl ~/.config/zellij/themes/
+```
+Then add `theme "emerald-synth"` to `~/.config/zellij/config.kdl`.
+
 ### Vivaldi
 
 Browser theme with radial glow background. See [`vivaldi/README.md`](vivaldi/README.md) for details.
@@ -30,7 +50,6 @@ Custom theme colors. See [`slack/theme.txt`](slack/theme.txt).
 
 ### Planned
 
-- Ghostty (terminal theme)
 - Neovim (colorscheme plugin)
 - Zed (editor theme)
 - Obsidian (CSS snippet)
