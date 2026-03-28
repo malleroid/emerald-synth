@@ -1,0 +1,21 @@
+# Emerald Synth — Ghostty theme
+
+background = #0d0221
+foreground = #f0e6ff
+
+palette = 0=#0a0118
+palette = 1=#ff2a6d
+palette = 2=#00ffcc
+palette = 3=#ffcc66
+palette = 4=#8b9cf7
+palette = 5=#ff79c6
+palette = 6=#4dd0e1
+palette = 7=#f0e6ff
+palette = 8=#6a5585
+palette = 9=#ff5c8a
+palette = 10=#40ffdd
+palette = 11=#ffe099
+palette = 12=#b0b8fc
+palette = 13=#ff9ed0
+palette = 14=#7ee0ec
+palette = 15=#ffffff
