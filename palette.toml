@@ -15,6 +15,11 @@ cursor    = "#00ffcc"
 cursor_text = "#0d0221"
 selection_fg = "#f0e6ff"
 selection_bg = "#1a3d35"
+split_divider = "#4a3565"
+search_fg = "#ffcc66"
+search_bg = "#4a3800"
+search_selected_fg = "#0d0221"
+search_selected_bg = "#ff5c8a"
 
 [core.bg_shades]
 darkest  = "#0a0118"

@@ -6,6 +6,12 @@ cursor-color = #00ffcc
 cursor-text = #0d0221
 selection-foreground = #f0e6ff
 selection-background = #1a3d35
+split-divider-color = #4a3565
+search-foreground = #ffcc66
+search-background = #4a3800
+search-selected-foreground = #0d0221
+search-selected-background = #ff5c8a
+bold-color = bright
 
 palette = 0=#0a0118
 palette = 1=#ff2a6d
