@@ -2,6 +2,10 @@
 
 background = #0d0221
 foreground = #f0e6ff
+cursor-color = #00ffcc
+cursor-text = #0d0221
+selection-foreground = #f0e6ff
+selection-background = #1a3d35
 
 palette = 0=#0a0118
 palette = 1=#ff2a6d

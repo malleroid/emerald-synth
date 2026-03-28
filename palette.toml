@@ -9,8 +9,12 @@ variant = "dark"
 # ── Core ──────────────────────────────────────────────
 
 [core]
-bg = "#0d0221"
-fg = "#f0e6ff"
+bg        = "#0d0221"
+fg        = "#f0e6ff"
+cursor    = "#00ffcc"
+cursor_text = "#0d0221"
+selection_fg = "#f0e6ff"
+selection_bg = "#1a3d35"
 
 [core.bg_shades]
 darkest  = "#0a0118"
