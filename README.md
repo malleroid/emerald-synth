@@ -71,9 +71,27 @@ ln -s /path/to/emerald-synth/obsidian/manifest.json /path/to/vault/.obsidian/the
 ```
 Then select "Emerald Synth" in Obsidian: Settings > Appearance > Themes.
 
-### Planned
+### Neovim
 
-- Neovim (colorscheme plugin)
+Lua colorscheme with editor UI, syntax, TreeSitter, LSP diagnostics, and plugin integrations (Telescope, Gitsigns).
+
+**Install (lazy.nvim):**
+```lua
+{
+  "malleroid/emerald-synth.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require("emerald-synth").setup({})
+    vim.cmd.colorscheme("emerald-synth")
+  end,
+}
+```
+
+**Install (local dev):**
+```sh
+nvim --cmd "set rtp^=/path/to/emerald-synth/nvim" -c "colorscheme emerald-synth"
+```
 
 ## License
 
