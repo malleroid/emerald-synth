@@ -58,10 +58,22 @@ Custom theme colors. See [`slack/theme.txt`](slack/theme.txt).
 
 **Install:** Settings > Appearance > Custom theme
 
+### Obsidian
+
+Community theme with Foundation base colors, semantic styling, heading gradient, syntax highlighting, callouts, and graph colors.
+
+**Install:**
+```sh
+# Symlink into vault
+mkdir -p /path/to/vault/.obsidian/themes/Emerald\ Synth
+ln -s /path/to/emerald-synth/obsidian/theme.css /path/to/vault/.obsidian/themes/Emerald\ Synth/theme.css
+ln -s /path/to/emerald-synth/obsidian/manifest.json /path/to/vault/.obsidian/themes/Emerald\ Synth/manifest.json
+```
+Then select "Emerald Synth" in Obsidian: Settings > Appearance > Themes.
+
 ### Planned
 
 - Neovim (colorscheme plugin)
-- Obsidian (community theme)
 
 ## License
 
