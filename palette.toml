@@ -25,9 +25,12 @@ search_selected_bg = "#ff5c8a"
 darkest  = "#0a0118"
 dark     = "#0d0221"
 medium   = "#150530"
+sidebar  = "#240d49"
+raised   = "#2b1451"
 
 [core.fg_shades]
 main     = "#f0e6ff"
+muted    = "#8369a5"
 dim      = "#60e0d0"
 
 # ── Accent ────────────────────────────────────────────
@@ -66,3 +69,43 @@ bright_blue    = "#b0b8fc"
 bright_magenta = "#ff9ed0"
 bright_cyan    = "#7ee0ec"
 bright_white   = "#ffffff"
+
+dim_black      = "#06000e"
+dim_red        = "#cc0040"
+dim_green      = "#00b28e"
+dim_yellow     = "#f9a600"
+dim_blue       = "#3652f1"
+dim_magenta    = "#ff0592"
+dim_cyan       = "#1ea1b2"
+dim_white      = "#a496b9"
+
+# ── Alpha ────────────────────────────────────────────
+# Effective colors when composited over bg (#0d0221).
+# Used for semantic backgrounds, borders, editor highlights.
+
+[alpha]
+semantic_bg     = "40"   # 25% — subtle state tint
+semantic_border = "60"   # 37.5% — visible border
+line_active     = "#1a3d3580"   # selection_bg at 50%
+ghost_hover     = "#00ffcc15"   # accent at 8%
+element_active  = "#00ffcc22"   # accent at 13%
+search_match    = "#4a380080"   # search_bg at 50%
+doc_read        = "#00ffcc25"   # accent at 14.5%
+doc_write       = "#00ffcc35"   # accent at 20.8%
+
+# ── Syntax ───────────────────────────────────────────
+# Color assignments for syntax highlighting (shared across Zed, Neovim, etc.)
+
+[syntax]
+keyword     = "#8b9cf7"   # ansi.blue
+function    = "#4dd0e1"   # ansi.cyan
+string      = "#00ffcc"   # accent.primary
+comment     = "#6a5585"   # ansi.bright_black (italic)
+type        = "#ffcc66"   # ansi.yellow
+number      = "#ffe099"   # ansi.bright_yellow
+boolean     = "#ffe099"   # ansi.bright_yellow
+constant    = "#ffe099"   # ansi.bright_yellow
+operator    = "#f0e6ff"   # core.fg
+property    = "#4dd0e1"   # ansi.cyan
+tag         = "#ff2a6d"   # ansi.red
+punctuation = "#6a5585"   # ansi.bright_black

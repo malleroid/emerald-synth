@@ -36,6 +36,16 @@ cp zellij/emerald-synth.kdl ~/.config/zellij/themes/
 ```
 Then add `theme "emerald-synth"` to `~/.config/zellij/config.kdl`.
 
+### Zed
+
+Editor theme with full UI styling, syntax highlighting, and terminal ANSI colors (normal/bright/dim).
+
+**Install:**
+```sh
+ln -s /path/to/emerald-synth/zed/emerald-synth.json ~/.config/zed/themes/emerald-synth.json
+```
+Then select "Emerald Synth" in Zed: `Cmd+K Cmd+T`.
+
 ### Vivaldi
 
 Browser theme with radial glow background. See [`vivaldi/README.md`](vivaldi/README.md) for details.
@@ -51,8 +61,7 @@ Custom theme colors. See [`slack/theme.txt`](slack/theme.txt).
 ### Planned
 
 - Neovim (colorscheme plugin)
-- Zed (editor theme)
-- Obsidian (CSS snippet)
+- Obsidian (community theme)
 
 ## License
 
