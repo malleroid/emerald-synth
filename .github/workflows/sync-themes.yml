@@ -1,0 +1,274 @@
+name: Sync themes to distribution repos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "nvim/**"
+      - "zed/**"
+      - "obsidian/**"
+      - "zellij/**"
+      - "ghostty/**"
+      - "LICENSE"
+
+permissions:
+  contents: read
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      nvim: ${{ steps.changes.outputs.nvim }}
+      zed: ${{ steps.changes.outputs.zed }}
+      obsidian: ${{ steps.changes.outputs.obsidian }}
+      zellij: ${{ steps.changes.outputs.zellij }}
+      ghostty: ${{ steps.changes.outputs.ghostty }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed directories
+        id: changes
+        run: |
+          changed=$(git diff --name-only "${{ github.event.before }}" HEAD)
+          # NOTE: When adding a new theme, add entries to: paths trigger, outputs, and here
+          echo "nvim=$( echo "$changed" | grep -qE '^(nvim/|LICENSE$)' && echo true || echo false )" >> "$GITHUB_OUTPUT"
+          echo "zed=$( echo "$changed" | grep -qE '^(zed/|LICENSE$)' && echo true || echo false )" >> "$GITHUB_OUTPUT"
+          echo "obsidian=$( echo "$changed" | grep -qE '^(obsidian/|LICENSE$)' && echo true || echo false )" >> "$GITHUB_OUTPUT"
+          echo "zellij=$( echo "$changed" | grep -qE '^zellij/' && echo true || echo false )" >> "$GITHUB_OUTPUT"
+          echo "ghostty=$( echo "$changed" | grep -qE '^ghostty/' && echo true || echo false )" >> "$GITHUB_OUTPUT"
+
+  # ─── Owned repos: direct push ───────────────────────────
+
+  sync-nvim:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.nvim == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: monorepo
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: malleroid/emerald-synth.nvim
+          token: ${{ secrets.SYNC_PAT }}
+          path: target
+
+      - name: Sync files
+        run: |
+          # Theme files (mirror directory structure)
+          rm -rf target/colors/ target/lua/
+          cp -r monorepo/nvim/colors/ target/colors/
+          cp -r monorepo/nvim/lua/ target/lua/
+          # README
+          cp monorepo/nvim/README.md target/README.md
+          # LICENSE from monorepo root
+          cp monorepo/LICENSE target/LICENSE
+
+      - name: Commit and push
+        working-directory: target
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Sync from emerald-synth@${GITHUB_SHA::7}"
+          git push
+
+  sync-zed:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.zed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: monorepo
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: malleroid/emerald-synth-zed
+          token: ${{ secrets.SYNC_PAT }}
+          path: target
+
+      - name: Sync files
+        run: |
+          # extension.toml → root
+          cp monorepo/zed/extension.toml target/extension.toml
+          # emerald-synth.json → themes/
+          mkdir -p target/themes
+          cp monorepo/zed/emerald-synth.json target/themes/emerald-synth.json
+          # README
+          cp monorepo/zed/README.md target/README.md
+          # LICENSE from monorepo root
+          cp monorepo/LICENSE target/LICENSE
+
+      - name: Commit and push
+        working-directory: target
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Sync from emerald-synth@${GITHUB_SHA::7}"
+          git push
+
+  sync-obsidian:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.obsidian == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: monorepo
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: malleroid/emerald-synth-obsidian
+          token: ${{ secrets.SYNC_PAT }}
+          path: target
+
+      - name: Sync files
+        run: |
+          cp monorepo/obsidian/manifest.json target/manifest.json
+          cp monorepo/obsidian/theme.css target/theme.css
+          # README
+          cp monorepo/obsidian/README.md target/README.md
+          # LICENSE from monorepo root
+          cp monorepo/LICENSE target/LICENSE
+
+      - name: Commit and push
+        working-directory: target
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Sync from emerald-synth@${GITHUB_SHA::7}"
+          git push
+
+  # ─── Fork repos: push branch + upstream PR ─────────────
+
+  sync-zellij:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.zellij == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: monorepo
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: malleroid/zellij
+          token: ${{ secrets.SYNC_PAT }}
+          path: fork
+
+      - name: Sync upstream and create branch
+        working-directory: fork
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Sync fork with upstream
+          gh repo sync malleroid/zellij
+          git pull --ff-only origin main
+          # Create or reset sync branch from main
+          git checkout -B sync/emerald-synth-theme
+
+      - name: Sync file
+        run: |
+          cp monorepo/zellij/emerald-synth.kdl fork/zellij-utils/assets/themes/emerald-synth.kdl
+
+      - name: Commit and push
+        working-directory: fork
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update emerald-synth theme"
+          git push -u origin sync/emerald-synth-theme --force-with-lease
+
+      - name: Ensure upstream PR exists
+        working-directory: fork
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+        run: |
+          existing=$(gh pr list --repo zellij-org/zellij --head malleroid:sync/emerald-synth-theme --state open --json number --jq 'length')
+          if [ "$existing" = "0" ]; then
+            gh pr create \
+              --repo zellij-org/zellij \
+              --head malleroid:sync/emerald-synth-theme \
+              --title "Update emerald-synth theme" \
+              --body "Automated sync from [malleroid/emerald-synth](https://github.com/malleroid/emerald-synth)."
+          fi
+
+  sync-ghostty:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.ghostty == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: monorepo
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: malleroid/iTerm2-Color-Schemes
+          token: ${{ secrets.SYNC_PAT }}
+          path: fork
+
+      - name: Sync upstream and create branch
+        working-directory: fork
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Sync fork with upstream
+          gh repo sync malleroid/iTerm2-Color-Schemes
+          git pull --ff-only origin master
+          # Create or reset sync branch from master
+          git checkout -B sync/emerald-synth-theme
+
+      - name: Sync file
+        run: |
+          cp "monorepo/ghostty/emerald-synth" "fork/ghostty/Emerald Synth"
+
+      - name: Commit and push
+        working-directory: fork
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update Emerald Synth ghostty theme"
+          git push -u origin sync/emerald-synth-theme --force-with-lease
+
+      - name: Ensure upstream PR exists
+        working-directory: fork
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+        run: |
+          existing=$(gh pr list --repo mbadolato/iTerm2-Color-Schemes --head malleroid:sync/emerald-synth-theme --state open --json number --jq 'length')
+          if [ "$existing" = "0" ]; then
+            gh pr create \
+              --repo mbadolato/iTerm2-Color-Schemes \
+              --head malleroid:sync/emerald-synth-theme \
+              --title "Update Emerald Synth ghostty theme" \
+              --body "Automated sync from [malleroid/emerald-synth](https://github.com/malleroid/emerald-synth)."
+          fi
