@@ -17,6 +17,7 @@ permissions:
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       nvim: ${{ steps.changes.outputs.nvim }}
       zed: ${{ steps.changes.outputs.zed }}
@@ -45,6 +46,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.nvim == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -84,6 +86,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.zed == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -124,6 +127,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.obsidian == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -163,6 +167,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.zellij == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -220,6 +225,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.ghostty == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
