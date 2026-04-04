@@ -7,12 +7,12 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
   h1 { color: #00ffcc; font-size: 20px; }
-  .sub { color: #8369a5; font-size: 12px; }
+  .sub { color: #8d73af; font-size: 12px; }
 
   .swatches { display: flex; gap: 8px; }
   .sw { text-align: center; }
   .sw-color { width: 56px; height: 32px; border-radius: 4px; border: 1px solid #4a3565; }
-  .sw-label { font-size: 9px; color: #8369a5; margin-top: 2px; }
+  .sw-label { font-size: 9px; color: #8d73af; margin-top: 2px; }
 
   /* ── Vivaldi chrome ── */
   .vivaldi { width: 800px; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
@@ -22,11 +22,11 @@
 
   /* Tab bar — colorBg based, accentOnWindow:false */
   .tabbar { background: #0d0221; display: flex; align-items: flex-end; padding: 4px 8px 0; border-bottom: 1px solid #1a0a3a; }
-  .tab { padding: 6px 14px; font-size: 11px; color: #8369a5; border-radius: 6px 6px 0 0; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; }
+  .tab { padding: 6px 14px; font-size: 11px; color: #8d73af; border-radius: 6px 6px 0 0; cursor: pointer; display: flex; align-items: center; gap: 6px; position: relative; }
   .tab.active { background: #00d4aa; color: #0d0221; }
   .tab .favicon { width: 12px; height: 12px; border-radius: 2px; }
   .tab .close { color: #6a5585; font-size: 9px; margin-left: 6px; }
-  .tab.active .close { color: #8369a5; }
+  .tab.active .close { color: #8d73af; }
 
   /* Navigation bar */
   .navbar { background: #00d4aa; padding: 6px 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1a0a3a; }
@@ -53,14 +53,14 @@
   .panel-title { padding: 6px 14px; font-size: 12px; font-weight: 700; color: #00ffcc; }
   .panel-item { padding: 4px 14px; font-size: 11px; color: #00ffcc; cursor: pointer; display: flex; align-items: center; gap: 6px; }
   .panel-item:hover { background: #150530; }
-  .panel-item .icon { color: #8369a5; }
+  .panel-item .icon { color: #8d73af; }
 
   /* Status bar */
-  .statusbar { background: #0d0221; padding: 3px 12px; font-size: 11px; color: #8369a5; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a0a3a; }
+  .statusbar { background: #0d0221; padding: 3px 12px; font-size: 11px; color: #8d73af; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a0a3a; }
   .statusbar .indicator { width: 8px; height: 8px; border-radius: 50%; background: #00d4aa; }
 
   /* Annotation labels */
-  .anno { display: inline-block; font-size: 9px; color: #0d0221; background: #8369a5; padding: 1px 5px; border-radius: 2px; margin-left: 6px; vertical-align: middle; }
+  .anno { display: inline-block; font-size: 9px; color: #0d0221; background: #8d73af; padding: 1px 5px; border-radius: 2px; margin-left: 6px; vertical-align: middle; }
   .anno-accent { background: #d964a8; }
   .anno-fg { background: #00ffcc; }
   .anno-highlight { background: #ff79c6; }
@@ -148,11 +148,11 @@
 </div>
 
 <!-- Color mapping annotation -->
-<div style="width:800px; margin-top:8px; font-size:11px; color:#8369a5; line-height:2">
+<div style="width:800px; margin-top:8px; font-size:11px; color:#8d73af; line-height:2">
   <strong style="color:#00ffcc">colorFg #00ffcc</strong> &rarr; tab text, address bar text, panel text, status bar<br>
   <strong style="color:#00d4aa">colorAccentBg #00d4aa</strong> &rarr; top accent line, active tab bg, address bar highlights<br>
   <strong style="color:#ff79c6">colorHighlightBg #ff79c6</strong> &rarr; focused input borders, selection highlights<br>
-  <strong style="color:#8369a5">colorBg #0d0221</strong> &rarr; tab bar, navbar, panel, status bar background
+  <strong style="color:#8d73af">colorBg #0d0221</strong> &rarr; tab bar, navbar, panel, status bar background
 </div>
 
 </body>
