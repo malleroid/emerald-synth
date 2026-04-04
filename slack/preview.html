@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emerald Synth — Slack Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  h1 { color: #00ffcc; font-size: 20px; }
+  .sub { color: #8369a5; font-size: 12px; }
+
+  .swatches { display: flex; gap: 8px; }
+  .sw { text-align: center; }
+  .sw-color { width: 56px; height: 32px; border-radius: 4px; border: 1px solid #4a3565; }
+  .sw-label { font-size: 9px; color: #8369a5; margin-top: 2px; }
+
+  .slack { width: 720px; background: #0d0221; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); display: flex; height: 380px; }
+
+  /* Sidebar */
+  .sidebar { width: 240px; background: #150530; display: flex; flex-direction: column; }
+  .sidebar-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #4a3565; }
+  .sidebar-header .workspace { font-size: 15px; font-weight: 700; color: #ffffff; }
+  .sidebar-header .badge { background: #ff2a6d; color: #0d0221; font-size: 10px; padding: 2px 6px; border-radius: 8px; font-weight: 700; }
+  .sidebar-section { padding: 8px 16px 4px; font-size: 11px; color: #8369a5; text-transform: uppercase; }
+  .channel { padding: 3px 16px; font-size: 13px; color: #8369a5; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .channel:hover { background: #240d49; color: #ffffff; }
+  .channel.active { background: #00ffcc; color: #0d0221; border-radius: 4px; margin: 0 8px; padding: 3px 8px; }
+  .channel.unread { color: #ffffff; font-weight: 600; }
+  .channel .hash { color: #6a5585; font-size: 11px; }
+  .channel.active .hash { color: #0d0221; }
+  .presence { width: 8px; height: 8px; border-radius: 50%; border: 2px solid #00ffcc; flex-shrink: 0; }
+  .presence.online { background: #00ffcc; }
+  .sidebar-fill { flex: 1; }
+
+  /* Main */
+  .main { flex: 1; display: flex; flex-direction: column; background: #0d0221; }
+  .main-header { padding: 10px 18px; border-bottom: 1px solid #4a3565; display: flex; align-items: center; gap: 8px; }
+  .main-header .name { font-size: 15px; font-weight: 700; color: #ffffff; }
+  .main-header .topic { font-size: 12px; color: #8369a5; margin-left: 8px; }
+  .messages { flex: 1; padding: 12px 18px; overflow-y: auto; }
+  .msg { margin-bottom: 14px; }
+  .msg-header { display: flex; align-items: baseline; gap: 8px; }
+  .msg-author { font-weight: 700; color: #ffffff; font-size: 14px; }
+  .msg-time { font-size: 11px; color: #6a5585; }
+  .msg-body { font-size: 13px; color: #d1d2d3; margin-top: 2px; line-height: 1.5; font-family: -apple-system, 'Segoe UI', sans-serif; }
+  .msg-body a { color: #ff79c6; text-decoration: none; }
+  .msg-body a:hover { text-decoration: underline; }
+  .msg-body code { background: #150530; color: #ff79c6; padding: 2px 5px; border-radius: 3px; font-family: 'SF Mono', monospace; font-size: 12px; }
+  .msg-reaction { display: inline-flex; align-items: center; gap: 4px; background: #150530; border: 1px solid #4a3565; border-radius: 12px; padding: 2px 8px; font-size: 12px; margin-top: 4px; cursor: pointer; }
+  .msg-reaction:hover { border-color: #ff79c6; }
+  .msg-reaction .count { color: #ff79c6; }
+
+  .input-area { padding: 10px 18px; border-top: 1px solid #4a3565; }
+  .input-box { background: #150530; border: 1px solid #4a3565; border-radius: 8px; padding: 8px 14px; color: #8369a5; font-size: 13px; font-family: inherit; width: 100%; }
+  .input-box:focus { border-color: #ff79c6; outline: none; }
+</style>
+</head>
+<body>
+
+<h1>Slack &mdash; Emerald Synth</h1>
+<div class="sub">System Navigation: #150530 &bull; Selected Items: #00ffcc &bull; Presence: #00ffcc &bull; Notifications: #ff2a6d</div>
+
+<div class="swatches">
+  <div class="sw"><div class="sw-color" style="background:#150530"></div><div class="sw-label">Navigation</div></div>
+  <div class="sw"><div class="sw-color" style="background:#00ffcc"></div><div class="sw-label">Selected</div></div>
+  <div class="sw"><div class="sw-color" style="background:#00ffcc"></div><div class="sw-label">Presence</div></div>
+  <div class="sw"><div class="sw-color" style="background:#ff2a6d"></div><div class="sw-label">Notification</div></div>
+</div>
+
+<div class="slack">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <span class="workspace">&#9671; Synth Lab</span>
+      <span class="badge">3</span>
+    </div>
+    <div class="sidebar-section">Channels</div>
+    <div class="channel active"><span class="hash">#</span> general</div>
+    <div class="channel unread"><span class="hash">#</span> design <span style="background:#ff2a6d;color:#0d0221;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:auto">2</span></div>
+    <div class="channel"><span class="hash">#</span> dev</div>
+    <div class="channel"><span class="hash">#</span> random</div>
+    <div class="sidebar-section">Direct Messages</div>
+    <div class="channel"><span class="presence online"></span> malleus</div>
+    <div class="channel"><span class="presence"></span> designer</div>
+    <div class="channel"><span class="presence online"></span> reviewer</div>
+    <div class="sidebar-fill"></div>
+  </div>
+  <div class="main">
+    <div class="main-header">
+      <span class="name"># general</span>
+      <span class="topic">Theme development updates</span>
+    </div>
+    <div class="messages">
+      <div class="msg">
+        <div class="msg-header"><span class="msg-author">malleus</span> <span class="msg-time">10:30 AM</span></div>
+        <div class="msg-body">Pushed the recolor branch. fg is now <code>#00ffcc</code> emerald, accent moved to <code>#ff79c6</code> magenta.</div>
+        <div><span class="msg-reaction">&#128994; <span class="count">3</span></span> <span class="msg-reaction">&#127881; <span class="count">1</span></span></div>
+      </div>
+      <div class="msg">
+        <div class="msg-header"><span class="msg-author">bot</span> <span class="msg-time">10:31 AM</span></div>
+        <div class="msg-body"><a href="#">PR #17</a> opened: <strong>feat/recolor-fg-emerald</strong><br>8 files changed, 121 insertions, 121 deletions</div>
+      </div>
+      <div class="msg">
+        <div class="msg-header"><span class="msg-author">reviewer</span> <span class="msg-time">10:45 AM</span></div>
+        <div class="msg-body">Nice. The green-on-indigo contrast ratio is excellent (10.5:1). Magenta strings look great in the syntax preview too.</div>
+      </div>
+    </div>
+    <div class="input-area">
+      <input class="input-box" value="Message #general" readonly>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
