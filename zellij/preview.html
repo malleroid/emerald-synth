@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emerald Synth — Zellij Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  h1 { color: #00ffcc; font-size: 20px; }
+  h3 { color: #60e0d0; font-size: 14px; }
+  .sub { color: #8369a5; font-size: 12px; }
+
+  .zellij { width: 720px; background: #0a0118; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+
+  /* Ribbon / Tab bar */
+  .ribbon { display: flex; font-size: 12px; }
+  .ribbon-selected { background: #ff79c6; color: #0d0221; padding: 4px 14px; font-weight: 600; }
+  .ribbon-unselected { background: #00ffcc; color: #0d0221; padding: 4px 14px; }
+  .ribbon-fill { flex: 1; background: #0a0118; }
+
+  /* Pane grid */
+  .panes { display: grid; gap: 0; }
+  .panes-2col { grid-template-columns: 1fr 1fr; }
+  .panes-1col { grid-template-columns: 1fr; }
+  .pane { border: 1px solid #6a5585; }
+  .pane.focused { border-color: #ff79c6; }
+  .pane-title { padding: 2px 10px; font-size: 11px; }
+  .pane-title.focused { background: #ff79c6; color: #0d0221; }
+  .pane-title.unfocused { background: #6a5585; color: #0d0221; }
+  .pane-body { background: #0d0221; padding: 10px 14px; font-size: 12px; line-height: 1.5; min-height: 80px; }
+
+  /* Text colors from zellij theme */
+  .base { color: #00ffcc; }
+  .e0 { color: #ffcc66; }    /* emphasis_0: yellow */
+  .e1 { color: #4dd0e1; }    /* emphasis_1: cyan */
+  .e2 { color: #f0e6ff; }    /* emphasis_2: lavender (new) */
+  .e3 { color: #ff79c6; }    /* emphasis_3: magenta */
+  .muted { color: #6a5585; }
+  .ok { color: #00ffcc; }
+  .err { color: #ff2a6d; }
+
+  /* Status bar */
+  .status { background: #0a0118; padding: 4px 12px; font-size: 11px; color: #8369a5; display: flex; justify-content: space-between; border-top: 1px solid #6a5585; }
+  .status .mode { color: #ff79c6; font-weight: 700; }
+
+  /* Frame styles */
+  .frame-selected { color: #ff79c6; }
+  .frame-unselected { color: #6a5585; }
+  .frame-highlight { color: #ffcc66; }
+
+  /* Legend */
+  .legend { display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* Multiplayer */
+  .players { display: flex; gap: 4px; }
+  .player { width: 20px; height: 20px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Zellij &mdash; Emerald Synth</h1>
+<div class="sub">ribbon_selected: magenta bg &bull; ribbon_unselected: green bg &bull; frame_selected: magenta border &bull; text base: #00ffcc</div>
+
+<!-- Color legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#00ffcc"></div> base (fg)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffcc66"></div> emphasis_0 (yellow)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4dd0e1"></div> emphasis_1 (cyan)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f0e6ff"></div> emphasis_2 (lavender)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff79c6"></div> emphasis_3 (magenta)</div>
+</div>
+
+<!-- Layout 1: Two panes -->
+<div class="zellij">
+  <div class="ribbon">
+    <div class="ribbon-selected">Tab 1</div>
+    <div class="ribbon-unselected">Tab 2</div>
+    <div class="ribbon-fill"></div>
+  </div>
+  <div class="panes panes-2col">
+    <div class="pane focused">
+      <div class="pane-title focused">&#9654; Pane 1 &mdash; fish</div>
+      <div class="pane-body">
+        <div><span class="e3">&#10095;</span> <span class="e1">~/emerald-synth</span> <span class="muted">(main)</span></div>
+        <div><span class="base">cargo build</span> <span class="e0">--release</span></div>
+        <div><span class="ok">Compiling</span> <span class="base">emerald-synth</span> <span class="e2">v0.1.0</span></div>
+        <div><span class="ok">Finished</span> <span class="muted">release [optimized] 3.2s</span></div>
+      </div>
+    </div>
+    <div class="pane">
+      <div class="pane-title unfocused">Pane 2 &mdash; fish</div>
+      <div class="pane-body">
+        <div><span class="e3">&#10095;</span> <span class="e1">~/emerald-synth</span></div>
+        <div><span class="base">cargo test</span></div>
+        <div><span class="ok">test</span> <span class="base">palette::parse</span> <span class="muted">...</span> <span class="ok">ok</span></div>
+        <div><span class="err">test</span> <span class="base">theme::render</span> <span class="muted">...</span> <span class="err">FAILED</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="status">
+    <span><span class="mode">NORMAL</span> &nbsp; <span class="e1">Ctrl+p</span> pane &nbsp; <span class="e1">Ctrl+t</span> tab &nbsp; <span class="e1">Ctrl+s</span> scroll</span>
+    <span><span class="e0">2 panes</span></span>
+  </div>
+</div>
+
+<!-- Layout 2: Three panes (IDE-like) -->
+<h3>IDE Layout</h3>
+<div class="zellij">
+  <div class="ribbon">
+    <div class="ribbon-selected">workspace</div>
+    <div class="ribbon-unselected">logs</div>
+    <div class="ribbon-fill"></div>
+  </div>
+  <div style="display:grid; grid-template-columns: 200px 1fr; grid-template-rows: auto auto;">
+    <div class="pane" style="grid-row: 1 / 3">
+      <div class="pane-title unfocused">tree</div>
+      <div class="pane-body" style="font-size:11px">
+        <div><span class="e0">&#9660;</span> <span class="base">emerald-synth/</span></div>
+        <div>&nbsp; <span class="e1">palette.toml</span></div>
+        <div>&nbsp; <span class="e0">&#9660;</span> <span class="base">zed/</span></div>
+        <div>&nbsp;&nbsp;&nbsp; <span class="e2">emerald-synth.json</span></div>
+        <div>&nbsp; <span class="e0">&#9660;</span> <span class="base">obsidian/</span></div>
+        <div>&nbsp;&nbsp;&nbsp; <span class="e3">theme.css</span></div>
+      </div>
+    </div>
+    <div class="pane focused">
+      <div class="pane-title focused">&#9654; editor</div>
+      <div class="pane-body">
+        <div><span class="muted">1</span> <span style="color:#8b9cf7">local</span> <span class="base">M</span> <span class="base">=</span> <span class="muted">{}</span></div>
+        <div><span class="muted">2</span> <span class="base">M</span><span class="muted">.</span><span class="e1">colors</span> <span class="base">=</span> <span class="muted">{</span></div>
+        <div><span class="muted">3</span>   <span class="e1">fg</span> <span class="base">=</span> <span class="e3">"#00ffcc"</span><span class="muted">,</span></div>
+        <div><span class="muted">4</span> <span class="muted">}</span></div>
+      </div>
+    </div>
+    <div class="pane">
+      <div class="pane-title unfocused">terminal</div>
+      <div class="pane-body" style="min-height:40px">
+        <div><span class="e3">$</span> <span class="base">echo</span> <span class="e3">"done"</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="status">
+    <span><span class="mode">NORMAL</span> &nbsp; <span class="e1">Ctrl+p</span> pane</span>
+    <span><span class="e0">3 panes</span></span>
+  </div>
+</div>
+
+<!-- Exit codes -->
+<h3>Exit Codes &amp; Multiplayer</h3>
+<div style="display:flex; gap:16px; width:720px">
+  <div style="flex:1; background:#0a0118; border-radius:8px; padding:12px 16px; font-size:13px">
+    <div style="color:#00ffcc; margin-bottom:4px; font-weight:600">exit_code_success</div>
+    <div><span class="ok">&#10003; Process exited with code </span><span class="e1">0</span></div>
+  </div>
+  <div style="flex:1; background:#0a0118; border-radius:8px; padding:12px 16px; font-size:13px">
+    <div style="color:#ff2a6d; margin-bottom:4px; font-weight:600">exit_code_error</div>
+    <div><span class="err">&#10007; Process exited with code </span><span class="e0">1</span></div>
+  </div>
+</div>
+<div style="width:720px; background:#0a0118; border-radius:8px; padding:12px 16px; font-size:12px">
+  <div style="color:#8369a5; margin-bottom:6px">multiplayer_user_colors</div>
+  <div class="players">
+    <div class="player" style="background:#ff79c6" title="player 1"></div>
+    <div class="player" style="background:#8b9cf7" title="player 2"></div>
+    <div class="player" style="background:#ffcc66" title="player 3"></div>
+    <div class="player" style="background:#4dd0e1" title="player 4"></div>
+    <div class="player" style="background:#00e67e" title="player 5"></div>
+    <div class="player" style="background:#ff2a6d" title="player 6"></div>
+    <div class="player" style="background:#b0b8fc" title="player 7"></div>
+    <div class="player" style="background:#ff9ed0" title="player 8"></div>
+    <div class="player" style="background:#7ee0ec" title="player 9"></div>
+    <div class="player" style="background:#ffe099" title="player 10"></div>
+  </div>
+</div>
+
+</body>
+</html>
