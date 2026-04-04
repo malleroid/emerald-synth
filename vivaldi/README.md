@@ -5,8 +5,8 @@
 | Setting       | Value     |
 |---------------|-----------|
 | Background    | `#0d0221` |
-| Foreground    | `#f0e6ff` |
-| Highlight     | `#00ffcc` |
+| Foreground    | `#00ffcc` |
+| Highlight     | `#ff79c6` |
 | Accent        | `#00d4aa` |
 
 ## Settings
@@ -21,7 +21,14 @@
 
 ## Upload description (for themes.vivaldi.net)
 
-> A synthwave-inspired dark theme with deep purple backgrounds and cyan-green accents. Features a subtle radial glow background image with teal and pink light sources. Designed for comfortable extended use with high contrast between UI elements.
+> A synthwave-inspired dark theme with deep purple backgrounds and emerald-green foreground text. Features a subtle radial glow background image with teal and pink light sources. Highlights use vibrant pink for contrast. Designed for comfortable extended use.
+
+## Upload / Update
+
+1. Apply the theme in Vivaldi, then go to Settings > Themes > Library > **Export Theme** and save the ZIP
+2. Log in to https://themes.vivaldi.net
+3. Open your published theme page, click **Edit**, upload the new ZIP, and click **Update**
+4. The theme will be published after review by the Vivaldi team
 
 ## Install
 
