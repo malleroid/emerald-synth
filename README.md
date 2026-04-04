@@ -1,16 +1,16 @@
 # Emerald Synth
 
-A synthwave-inspired dark color theme with deep purple backgrounds and cyan-green accents.
+A synthwave-inspired dark color theme with deep purple backgrounds and emerald-green foreground text.
 
 ## Palette
 
 | Role | Color | Hex |
 |------|-------|-----|
 | Background | ![#0d0221](https://placehold.co/16x16/0d0221/0d0221) | `#0d0221` |
-| Foreground | ![#f0e6ff](https://placehold.co/16x16/f0e6ff/f0e6ff) | `#f0e6ff` |
-| Accent | ![#00ffcc](https://placehold.co/16x16/00ffcc/00ffcc) | `#00ffcc` |
-| Border | ![#00d4aa](https://placehold.co/16x16/00d4aa/00d4aa) | `#00d4aa` |
-| Warning / Error | ![#ff2a6d](https://placehold.co/16x16/ff2a6d/ff2a6d) | `#ff2a6d` |
+| Foreground | ![#00ffcc](https://placehold.co/16x16/00ffcc/00ffcc) | `#00ffcc` |
+| Accent | ![#ff79c6](https://placehold.co/16x16/ff79c6/ff79c6) | `#ff79c6` |
+| Error | ![#ff2a6d](https://placehold.co/16x16/ff2a6d/ff2a6d) | `#ff2a6d` |
+| Warning | ![#ffcc66](https://placehold.co/16x16/ffcc66/ffcc66) | `#ffcc66` |
 
 Full palette definition: [`palette.toml`](palette.toml)
 
