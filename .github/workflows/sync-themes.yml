@@ -250,9 +250,27 @@ jobs:
           # Create or reset sync branch from master
           git checkout -B sync/emerald-synth-theme
 
-      - name: Sync file
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version-file: fork/.python-version
+
+      - run: pip install -r fork/requirements.txt
+
+      - name: Convert ghostty to YAML
         run: |
-          cp "monorepo/ghostty/emerald-synth" "fork/ghostty/Emerald Synth"
+          header='name: "Emerald Synth"\nauthor: "malleroid (https://github.com/malleroid)"\nvariant: "Dark"\n'
+          colors=$(python3 fork/tools/ghostty_to_yaml.py < monorepo/ghostty/emerald-synth)
+          printf "%b\n%s\n" "$header" "$colors" > "fork/yaml/Emerald Synth.yml"
+
+      - name: Generate all formats
+        working-directory: fork
+        run: python3 tools/gen.py -s "Emerald Synth"
+
+      - name: Generate screenshot
+        working-directory: fork/tools
+        run: |
+          python -m screenshot_gen
+          python generate_screenshots_readme.py
 
       - name: Commit and push
         working-directory: fork
