@@ -1,10 +1,10 @@
 # Emerald Synth — Ghostty theme
 
 background = #0d0221
-foreground = #f0e6ff
-cursor-color = #00ffcc
+foreground = #00ffcc
+cursor-color = #ff79c6
 cursor-text = #0d0221
-selection-foreground = #f0e6ff
+selection-foreground = #00ffcc
 selection-background = #1a3d35
 split-divider-color = #4a3565
 search-foreground = #ffcc66
@@ -15,7 +15,7 @@ bold-color = bright
 
 palette = 0=#0a0118
 palette = 1=#ff2a6d
-palette = 2=#00ffcc
+palette = 2=#00e67e
 palette = 3=#ffcc66
 palette = 4=#8b9cf7
 palette = 5=#ff79c6

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emerald Synth — Obsidian Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  h1 { color: #00ffcc; font-size: 20px; }
+  .sub { color: #8d73af; font-size: 12px; }
+
+  .obsidian { width: 800px; background: #0d0221; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); display: flex; }
+
+  /* Sidebar */
+  .sidebar { width: 220px; background: #150530; border-right: 1px solid #4a3565; padding: 10px 0; flex-shrink: 0; }
+  .sidebar-header { padding: 6px 14px; font-size: 13px; font-weight: 700; color: #00ffcc; }
+  .sidebar-section { padding: 4px 14px; font-size: 11px; color: #8d73af; text-transform: uppercase; margin-top: 8px; }
+  .nav-item { padding: 4px 14px; font-size: 12px; color: #00ffcc; border-radius: 4px; margin: 1px 6px; cursor: pointer; }
+  .nav-item:hover { color: #ff79c6; background: #2b1451; }
+  .nav-item.active { color: #ff79c6; background: #1a3d35; }
+
+  /* Content */
+  .content { flex: 1; padding: 28px 36px; font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.7; color: #00ffcc; overflow-y: auto; }
+  .content h1 { color: #ff79c6; font-size: 26px; margin-bottom: 6px; line-height: 1.3; border: none; padding: 0; }
+  .content h2 { color: #ffcc66; font-size: 20px; margin: 24px 0 8px; border-bottom: 1px solid #4a3565; padding-bottom: 4px; }
+  .content h3 { color: #8b9cf7; font-size: 17px; margin: 18px 0 6px; }
+  .content h4 { color: #4dd0e1; font-size: 15px; margin: 14px 0 4px; }
+  .content h5 { color: #40ffdd; font-size: 14px; margin: 10px 0 4px; }
+  .content h6 { color: #8d73af; font-size: 13px; margin: 8px 0 4px; }
+  .content p { margin: 8px 0; }
+  .content a { color: #ff79c6; text-decoration: underline; }
+  .content strong { color: #00ffcc; font-weight: 700; }
+  .content em { color: #ff79c6; font-style: italic; }
+  .content code { background: rgba(21, 5, 48, 0.5); color: #ff79c6; padding: 2px 6px; border-radius: 3px; font-family: 'SF Mono', monospace; font-size: 13px; }
+  .content blockquote { border-left: 3px solid #d964a8; padding-left: 14px; color: #8d73af; margin: 10px 0; }
+  .content ul { margin: 6px 0; padding-left: 24px; }
+  .content li { margin: 3px 0; }
+  .content li::marker { color: #ff79c6; }
+
+  /* Callouts */
+  .callout { border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-size: 14px; }
+  .callout-title { font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .callout-success { background: rgba(0, 255, 204, 0.08); border-left: 3px solid #00ffcc; }
+  .callout-success .callout-title { color: #00ffcc; }
+  .callout-tip { background: rgba(255, 121, 198, 0.08); border-left: 3px solid #ff79c6; }
+  .callout-tip .callout-title { color: #ff79c6; }
+  .callout-warning { background: rgba(255, 204, 102, 0.08); border-left: 3px solid #ffcc66; }
+  .callout-warning .callout-title { color: #ffcc66; }
+  .callout-error { background: rgba(255, 42, 109, 0.08); border-left: 3px solid #ff2a6d; }
+  .callout-error .callout-title { color: #ff2a6d; }
+  .callout-info { background: rgba(139, 156, 247, 0.08); border-left: 3px solid #8b9cf7; }
+  .callout-info .callout-title { color: #8b9cf7; }
+
+  /* Code block */
+  .codeblock { background: #0a0118; border-radius: 6px; padding: 12px 16px; font-family: 'SF Mono', monospace; font-size: 13px; line-height: 1.6; margin: 10px 0; overflow-x: auto; }
+  .kw { color: #8b9cf7; } .fn { color: #4dd0e1; } .str { color: #ff79c6; }
+  .cmt { color: #6a5585; font-style: italic; } .ty { color: #ffcc66; }
+  .num { color: #ffe099; } .op { color: #00ffcc; } .punc { color: #6a5585; }
+  .prop { color: #4dd0e1; } .tag-s { color: #ff2a6d; }
+
+  /* Checkbox */
+  .checkbox { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .cb { width: 16px; height: 16px; border: 2px solid #4a3565; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+  .cb.checked { background: #ff79c6; border-color: #ff79c6; color: #0d0221; }
+
+  /* Table */
+  .table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+  .table th { background: #150530; text-align: left; padding: 6px 10px; color: #ff79c6; border-bottom: 1px solid #4a3565; }
+  .table td { padding: 6px 10px; border-bottom: 1px solid #150530; }
+  .table tr:hover td { background: #1a3d35; }
+
+  /* Tags */
+  .obs-tag { background: rgba(77, 208, 225, 0.12); color: #4dd0e1; padding: 2px 8px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(77, 208, 225, 0.25); }
+
+  /* Graph */
+  .graph { background: #0a0118; border-radius: 8px; padding: 20px; margin: 10px 0; position: relative; height: 160px; }
+  .graph-node { width: 10px; height: 10px; border-radius: 50%; position: absolute; }
+  .graph-line-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+
+<h1>Obsidian &mdash; Emerald Synth</h1>
+<div class="sub">accent HSL(326, 100%, 74%) &bull; text-normal: #00ffcc &bull; headings: warm&#8594;cool gradient</div>
+
+<div class="obsidian">
+  <div class="sidebar">
+    <div class="sidebar-header">&#9671; Vault</div>
+    <div class="sidebar-section">Files</div>
+    <div class="nav-item">&#128196; Daily Note</div>
+    <div class="nav-item active">&#128196; Theme Design</div>
+    <div class="nav-item">&#128196; Color Theory</div>
+    <div class="nav-item">&#128196; Palette Spec</div>
+    <div class="sidebar-section">Tags</div>
+    <div class="nav-item" style="font-size:11px">#theme #design #color</div>
+  </div>
+  <div class="content">
+    <h1>Heading 1 &mdash; #ff79c6</h1>
+    <h2>Heading 2 &mdash; #ffcc66</h2>
+    <h3>Heading 3 &mdash; #8b9cf7</h3>
+    <h4>Heading 4 &mdash; #4dd0e1</h4>
+    <h5>Heading 5 &mdash; #40ffdd</h5>
+    <h6>Heading 6 &mdash; #8d73af</h6>
+
+    <p>Normal body text renders in <strong>emerald green</strong> (#00ffcc). Links appear in <a href="#">magenta accent</a>, and <em>italic text</em> adds emphasis with the accent color.</p>
+
+    <p>Inline <code>code</code> uses accent magenta. Tags: <span class="obs-tag">#theme</span> <span class="obs-tag">#design</span></p>
+
+    <blockquote>Blockquote borders use accent.border (#d964a8).<br>Quoted text uses muted color.</blockquote>
+
+    <div class="codeblock"><span class="kw">const</span> <span class="op">=</span> <span class="fn">require</span><span class="punc">(</span><span class="str">"emerald-synth"</span><span class="punc">)</span>
+<span class="kw">local</span> <span class="op">=</span> <span class="prop">palette</span><span class="punc">.</span><span class="prop">fg</span>  <span class="cmt">-- #00ffcc</span></div>
+
+    <div class="callout callout-success"><div class="callout-title">&#10003; Success</div>Green semantic preserved (#00ffcc)</div>
+    <div class="callout callout-tip"><div class="callout-title">&#9733; Tip</div>Tips use magenta accent (#ff79c6)</div>
+    <div class="callout callout-warning"><div class="callout-title">&#9888; Warning</div>Warnings stay yellow</div>
+    <div class="callout callout-error"><div class="callout-title">&#10007; Error</div>Errors stay red/pink</div>
+    <div class="callout callout-info"><div class="callout-title">&#8505; Info</div>Info stays blue</div>
+
+    <h3>Checklist</h3>
+    <div class="checkbox"><div class="cb checked">&#10003;</div> Recolor fg to emerald</div>
+    <div class="checkbox"><div class="cb checked">&#10003;</div> Accent to magenta</div>
+    <div class="checkbox"><div class="cb"></div> Visual verification</div>
+
+    <h3>Table</h3>
+    <table class="table">
+      <tr><th>Role</th><th>Old</th><th>New</th></tr>
+      <tr><td>core.fg</td><td>#f0e6ff</td><td>#00ffcc</td></tr>
+      <tr><td>accent</td><td>#00ffcc</td><td>#ff79c6</td></tr>
+      <tr><td>cursor</td><td>#00ffcc</td><td>#ff79c6</td></tr>
+    </table>
+
+    <h3>Knowledge Graph</h3>
+    <div class="graph">
+      <svg class="graph-line-svg" viewBox="0 0 400 160" preserveAspectRatio="none">
+        <line x1="120" y1="60" x2="240" y2="80" stroke="#4a3565" stroke-width="1"/>
+        <line x1="120" y1="60" x2="80" y2="120" stroke="#4a3565" stroke-width="1"/>
+        <line x1="240" y1="80" x2="320" y2="40" stroke="#4a3565" stroke-width="1"/>
+        <line x1="240" y1="80" x2="280" y2="130" stroke="#4a3565" stroke-width="1"/>
+      </svg>
+      <div class="graph-node" style="background:#ff79c6; width:14px; height:14px; left:113px; top:53px" title="Theme Design (focused)"></div>
+      <div class="graph-node" style="background:#ff79c6; left:235px; top:75px" title="Color Theory"></div>
+      <div class="graph-node" style="background:#ff79c6; left:75px; top:115px" title="Palette"></div>
+      <div class="graph-node" style="background:#4dd0e1; left:315px; top:35px" title="#design (tag)"></div>
+      <div class="graph-node" style="background:#ffcc66; left:275px; top:125px" title="image.png (attachment)"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

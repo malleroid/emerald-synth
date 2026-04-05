@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emerald Synth — Ghostty Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  h1 { color: #00ffcc; font-size: 20px; }
+  .sub { color: #8d73af; font-size: 12px; }
+
+  .terminal { width: 640px; background: #0d0221; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  .titlebar { background: #2b1451; padding: 8px 14px; font-size: 12px; color: #8d73af; display: flex; align-items: center; gap: 10px; }
+  .dots { display: flex; gap: 6px; }
+  .dots span { width: 12px; height: 12px; border-radius: 50%; }
+  .body { padding: 16px 20px; font-size: 13px; line-height: 1.6; }
+
+  .prompt { color: #00ffcc; }
+  .path { color: #4dd0e1; }
+  .cmd { color: #f0e6ff; }
+  .flag { color: #ffcc66; }
+  .muted { color: #6a5585; }
+  .err { color: #ff2a6d; }
+  .ok { color: #00ffcc; }
+  .blue { color: #8b9cf7; }
+  .mag { color: #ff79c6; }
+  .fg { color: #00ffcc; }
+
+  .ansi-row { display: flex; gap: 2px; margin-top: 4px; }
+  .ansi-block { width: 32px; height: 18px; border-radius: 2px; }
+
+  .palette { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sw { text-align: center; }
+  .sw-color { width: 48px; height: 28px; border-radius: 4px; border: 1px solid #4a3565; }
+  .sw-label { font-size: 9px; color: #8d73af; margin-top: 2px; }
+
+  .split { display: flex; gap: 2px; width: 640px; }
+  .split > div { flex: 1; background: #0d0221; border-radius: 8px; overflow: hidden; }
+  .split-bar { height: 100%; width: 2px; background: #4a3565; flex-shrink: 0; border-radius: 0; }
+  .split-body { padding: 12px 16px; font-size: 12px; line-height: 1.5; }
+  .split-title { background: #2b1451; padding: 3px 10px; font-size: 10px; color: #8d73af; }
+</style>
+</head>
+<body>
+
+<h1>Ghostty &mdash; Emerald Synth</h1>
+<div class="sub">foreground: #00ffcc &bull; cursor: #ff79c6 &bull; background: #0d0221</div>
+
+<div class="palette">
+  <div class="sw"><div class="sw-color" style="background:#0d0221"></div><div class="sw-label">bg</div></div>
+  <div class="sw"><div class="sw-color" style="background:#00ffcc"></div><div class="sw-label">fg</div></div>
+  <div class="sw"><div class="sw-color" style="background:#ff79c6"></div><div class="sw-label">cursor</div></div>
+  <div class="sw"><div class="sw-color" style="background:#1a3d35"></div><div class="sw-label">selection</div></div>
+  <div class="sw"><div class="sw-color" style="background:#ffcc66"></div><div class="sw-label">search fg</div></div>
+  <div class="sw"><div class="sw-color" style="background:#4a3800"></div><div class="sw-label">search bg</div></div>
+  <div class="sw"><div class="sw-color" style="background:#4a3565"></div><div class="sw-label">split</div></div>
+</div>
+
+<!-- Main terminal -->
+<div class="terminal">
+  <div class="titlebar">
+    <div class="dots">
+      <span style="background:#ff2a6d"></span>
+      <span style="background:#ffcc66"></span>
+      <span style="background:#00ffcc"></span>
+    </div>
+    ghostty &mdash; fish
+  </div>
+  <div class="body">
+    <div><span class="prompt">&#10095;</span> <span class="path">~/emerald-synth</span> <span class="muted">(main)</span></div>
+    <div><span class="cmd">git</span> <span class="flag">status</span></div>
+    <div><span class="muted">On branch</span> <span class="ok">feat/recolor-fg-emerald</span></div>
+    <div><span class="muted">Changes not staged for commit:</span></div>
+    <div>&nbsp; <span class="err">modified:</span> <span class="fg">palette.toml</span></div>
+    <div>&nbsp; <span class="err">modified:</span> <span class="fg">zed/emerald-synth.json</span></div>
+    <div>&nbsp; <span class="err">modified:</span> <span class="fg">obsidian/theme.css</span></div>
+    <div></div>
+    <div><span class="prompt">&#10095;</span> <span class="path">~/emerald-synth</span> <span class="muted">(feat/recolor-fg-emerald)</span></div>
+    <div><span class="cmd">rg</span> <span class="flag">--count</span> <span class="mag">"#00ffcc"</span> <span class="fg">palette.toml</span></div>
+    <div><span class="blue">palette.toml</span><span class="muted">:</span><span class="mag">5</span></div>
+    <div></div>
+    <div><span class="prompt">&#10095;</span> <span class="path">~/emerald-synth</span></div>
+    <div><span class="cmd">echo</span> <span style="color:#ff2a6d">red</span> <span style="color:#00e67e">green</span> <span style="color:#ffcc66">yellow</span> <span style="color:#8b9cf7">blue</span> <span style="color:#ff79c6">magenta</span> <span style="color:#4dd0e1">cyan</span></div>
+    <div class="ansi-row">
+      <div class="ansi-block" style="background:#ff2a6d"></div>
+      <div class="ansi-block" style="background:#00e67e"></div>
+      <div class="ansi-block" style="background:#ffcc66"></div>
+      <div class="ansi-block" style="background:#8b9cf7"></div>
+      <div class="ansi-block" style="background:#ff79c6"></div>
+      <div class="ansi-block" style="background:#4dd0e1"></div>
+      <div class="ansi-block" style="background:#f0e6ff"></div>
+    </div>
+    <div class="ansi-row" style="margin-top:2px">
+      <div class="ansi-block" style="background:#ff5c8a"></div>
+      <div class="ansi-block" style="background:#40ffdd"></div>
+      <div class="ansi-block" style="background:#ffe099"></div>
+      <div class="ansi-block" style="background:#b0b8fc"></div>
+      <div class="ansi-block" style="background:#ff9ed0"></div>
+      <div class="ansi-block" style="background:#7ee0ec"></div>
+      <div class="ansi-block" style="background:#ffffff"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Split panes -->
+<div class="split">
+  <div>
+    <div class="split-title">left pane</div>
+    <div class="split-body">
+      <div><span class="prompt">$</span> <span class="fg">cargo build</span></div>
+      <div><span class="ok">Compiling</span> <span class="fg">emerald-synth v0.1.0</span></div>
+      <div><span class="ok">Finished</span> <span class="muted">dev [unoptimized] 1.2s</span></div>
+    </div>
+  </div>
+  <div class="split-bar"></div>
+  <div>
+    <div class="split-title">right pane</div>
+    <div class="split-body">
+      <div><span class="prompt">$</span> <span class="fg">cargo test</span></div>
+      <div><span class="ok">test</span> <span class="fg">palette::parse</span> <span class="muted">...</span> <span class="ok">ok</span></div>
+      <div><span class="err">test</span> <span class="fg">theme::render</span> <span class="muted">...</span> <span class="err">FAILED</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

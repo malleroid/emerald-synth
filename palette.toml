@@ -10,10 +10,10 @@ variant = "dark"
 
 [core]
 bg        = "#0d0221"
-fg        = "#f0e6ff"
-cursor    = "#00ffcc"
+fg        = "#00ffcc"
+cursor    = "#ff79c6"
 cursor_text = "#0d0221"
-selection_fg = "#f0e6ff"
+selection_fg = "#00ffcc"
 selection_bg = "#1a3d35"
 split_divider = "#4a3565"
 search_fg = "#ffcc66"
@@ -23,30 +23,32 @@ search_selected_bg = "#ff5c8a"
 
 [core.bg_shades]
 darkest  = "#0a0118"
-dark     = "#0d0221"
+dark     = "#0d0221"    # = core.bg (shade scale anchor)
 medium   = "#150530"
 sidebar  = "#240d49"
 raised   = "#2b1451"
+hidden   = "#2a1545"
 
 [core.fg_shades]
-main     = "#f0e6ff"
-muted    = "#8369a5"
+main     = "#00ffcc"    # = core.fg (shade scale anchor)
+muted    = "#8d73af"
 dim      = "#60e0d0"
+dark     = "#00d4aa"
 
 # ── Accent ────────────────────────────────────────────
 
 [accent]
-primary       = "#00ffcc"
-primary_dim   = "rgba(0, 255, 204, 0.25)"
-primary_text  = "#40ffdd"
+primary       = "#ff79c6"
+primary_dim   = "rgba(255, 121, 198, 0.25)"
+primary_text  = "#ff9ed0"
 foreground    = "#0d0221"
-border        = "#00d4aa"
+border        = "#d964a8"
 
 # ── Semantic ──────────────────────────────────────────
 
 [semantic]
 success = "#00ffcc"
-warning = "#ff2a6d"
+warning = "#ffcc66"
 error   = "#ff2a6d"
 
 # ── ANSI 16 ──────────────────────────────────────────
@@ -54,7 +56,7 @@ error   = "#ff2a6d"
 [ansi]
 black          = "#0a0118"
 red            = "#ff2a6d"
-green          = "#00ffcc"
+green          = "#00e67e"
 yellow         = "#ffcc66"
 blue           = "#8b9cf7"
 magenta        = "#ff79c6"
@@ -87,11 +89,11 @@ dim_white      = "#a496b9"
 semantic_bg     = "40"   # 25% — subtle state tint
 semantic_border = "60"   # 37.5% — visible border
 line_active     = "#1a3d3580"   # selection_bg at 50%
-ghost_hover     = "#00ffcc15"   # accent at 8%
-element_active  = "#00ffcc22"   # accent at 13%
+ghost_hover     = "#ff79c615"   # accent at 8%
+element_active  = "#ff79c622"   # accent at 13%
 search_match    = "#4a380080"   # search_bg at 50%
-doc_read        = "#00ffcc25"   # accent at 14.5%
-doc_write       = "#00ffcc35"   # accent at 20.8%
+doc_read        = "#ff79c625"   # accent at 14.5%
+doc_write       = "#ff79c635"   # accent at 20.8%
 
 # ── Syntax ───────────────────────────────────────────
 # Color assignments for syntax highlighting (shared across Zed, Neovim, etc.)
@@ -99,13 +101,13 @@ doc_write       = "#00ffcc35"   # accent at 20.8%
 [syntax]
 keyword     = "#8b9cf7"   # ansi.blue
 function    = "#4dd0e1"   # ansi.cyan
-string      = "#00ffcc"   # accent.primary
+string      = "#ff79c6"   # accent.primary
 comment     = "#6a5585"   # ansi.bright_black (italic)
 type        = "#ffcc66"   # ansi.yellow
 number      = "#ffe099"   # ansi.bright_yellow
 boolean     = "#ffe099"   # ansi.bright_yellow
 constant    = "#ffe099"   # ansi.bright_yellow
-operator    = "#f0e6ff"   # core.fg
+operator    = "#00ffcc"   # core.fg
 property    = "#4dd0e1"   # ansi.cyan
 tag         = "#ff2a6d"   # ansi.red
 punctuation = "#6a5585"   # ansi.bright_black

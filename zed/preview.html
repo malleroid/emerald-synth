@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emerald Synth — Zed Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; color: #ccc; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 14px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  h1 { color: #00ffcc; font-size: 20px; }
+  .sub { color: #8d73af; font-size: 12px; }
+
+  .zed { width: 800px; background: #0d0221; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  .titlebar { background: #00d4aa; color: #0d0221; padding: 6px 14px; font-size: 12px; font-weight: 600; }
+  .tabs { background: #2b1451; display: flex; }
+  .tab { padding: 6px 16px; font-size: 12px; color: #8d73af; }
+  .tab.active { background: #00d4aa; color: #0d0221; }
+  .main { display: flex; }
+  .sidebar { width: 200px; background: #240d49; padding: 8px 0; border-right: 1px solid #4a3565; font-size: 12px; }
+  .sidebar-item { padding: 3px 12px; color: #8d73af; }
+  .sidebar-item:hover { color: #ff79c6; background: #2b1451; }
+  .sidebar-item.active { color: #ff79c6; background: #1a3d35; }
+  .sidebar-item .indent { padding-left: 12px; }
+  .editor-area { flex: 1; display: flex; flex-direction: column; }
+  .editor-body { flex: 1; display: flex; }
+  .gutter { width: 44px; text-align: right; padding: 10px 8px 10px 0; font-size: 12px; color: #6a5585; line-height: 1.65; user-select: none; }
+  .gutter .active { color: #ff79c6; }
+  .buffer { flex: 1; padding: 10px 14px; font-size: 13px; line-height: 1.65; overflow-x: auto; }
+  .line { min-height: 21px; white-space: pre; }
+  .line.active-line { background: rgba(26, 61, 53, 0.5); }
+  .statusbar { background: #2b1451; padding: 4px 12px; font-size: 11px; color: #8d73af; display: flex; justify-content: space-between; }
+  .statusbar .accent { color: #ff79c6; }
+
+  .kw { color: #8b9cf7; } .fn { color: #4dd0e1; } .str { color: #ff79c6; }
+  .cmt { color: #6a5585; font-style: italic; } .ty { color: #ffcc66; }
+  .num { color: #ffe099; } .op { color: #00ffcc; } .prop { color: #4dd0e1; }
+  .tag { color: #ff2a6d; } .punc { color: #6a5585; } .var { color: #00ffcc; }
+  .str-esc { color: #ff9ed0; }
+
+  .scrollbar { position: absolute; right: 2px; top: 10px; width: 6px; height: 40px; background: rgba(255,121,198,0.19); border-radius: 3px; }
+
+  .git-created { color: #00ffcc; }
+  .git-modified { color: #ffcc66; }
+  .git-deleted { color: #ff2a6d; }
+
+  .breadcrumb { background: #0d0221; padding: 4px 14px; font-size: 11px; color: #8d73af; border-bottom: 1px solid #150530; }
+  .breadcrumb .sep { color: #4a3565; margin: 0 4px; }
+  .breadcrumb .current { color: #00ffcc; }
+
+  .panel-bottom { background: #240d49; border-top: 1px solid #4a3565; padding: 8px 14px; font-size: 12px; }
+  .panel-bottom-title { color: #ff79c6; font-weight: 600; margin-bottom: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<h1>Zed &mdash; Emerald Synth</h1>
+<div class="sub">title_bar: #00d4aa &bull; accent: #ff79c6 &bull; foreground: #00ffcc &bull; sidebar: #240d49</div>
+
+<div class="zed">
+  <div class="titlebar">Emerald Synth &mdash; ~/emerald-synth</div>
+  <div class="tabs">
+    <div class="tab active">emerald-synth.json</div>
+    <div class="tab">palette.toml</div>
+    <div class="tab">theme.css</div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-item">&#9660; emerald-synth</div>
+      <div class="sidebar-item indent" style="padding-left:24px">&#9660; zed</div>
+      <div class="sidebar-item active indent" style="padding-left:36px">emerald-synth.json</div>
+      <div class="sidebar-item indent" style="padding-left:36px">extension.toml</div>
+      <div class="sidebar-item indent" style="padding-left:24px">&#9660; nvim</div>
+      <div class="sidebar-item indent" style="padding-left:36px">palette.lua</div>
+      <div class="sidebar-item indent" style="padding-left:24px">&#9660; obsidian</div>
+      <div class="sidebar-item indent" style="padding-left:36px">theme.css</div>
+      <div class="sidebar-item indent" style="padding-left:12px"><span class="git-modified">&#9679;</span> palette.toml</div>
+    </div>
+    <div class="editor-area">
+      <div class="breadcrumb">
+        zed<span class="sep">&gt;</span>emerald-synth.json<span class="sep">&gt;</span><span class="current">themes[0].style</span>
+      </div>
+      <div class="editor-body" style="position:relative">
+        <div class="gutter">
+          <div>8</div><div>9</div><div class="active">10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+        </div>
+        <div class="buffer">
+          <div class="line">      <span class="str">"style"</span><span class="punc">:</span> <span class="punc">{</span></div>
+          <div class="line">        <span class="str">"background"</span><span class="punc">:</span> <span class="str">"#0d0221"</span><span class="punc">,</span></div>
+          <div class="line active-line">        <span class="str">"foreground"</span><span class="punc">:</span> <span class="str">"#00ffcc"</span><span class="punc">,</span></div>
+          <div class="line">        <span class="str">"accent"</span><span class="punc">:</span> <span class="str">"#ff79c6"</span><span class="punc">,</span></div>
+          <div class="line"></div>
+          <div class="line">        <span class="str">"border"</span><span class="punc">:</span> <span class="str">"#4a3565"</span><span class="punc">,</span></div>
+          <div class="line">        <span class="str">"border.focused"</span><span class="punc">:</span> <span class="str">"#ff79c6"</span><span class="punc">,</span></div>
+          <div class="line">        <span class="str">"border.selected"</span><span class="punc">:</span> <span class="str">"#d964a8"</span><span class="punc">,</span></div>
+          <div class="line"></div>
+          <div class="line">        <span class="str">"text"</span><span class="punc">:</span> <span class="str">"#00ffcc"</span><span class="punc">,</span></div>
+          <div class="line">        <span class="str">"text.accent"</span><span class="punc">:</span> <span class="str">"#ff79c6"</span><span class="punc">,</span></div>
+          <div class="line">        <span class="str">"text.muted"</span><span class="punc">:</span> <span class="str">"#8d73af"</span><span class="punc">,</span></div>
+          <div class="line"></div>
+          <div class="line">        <span class="str">"success"</span><span class="punc">:</span> <span class="str">"#00ffcc"</span><span class="punc">,</span></div>
+        </div>
+        <div class="scrollbar"></div>
+      </div>
+      <div class="panel-bottom">
+        <div class="panel-bottom-title">PROBLEMS (1)</div>
+        <div><span class="git-deleted">&#10007;</span> <span style="color:#00ffcc">emerald-synth.json</span><span style="color:#6a5585">:74</span> &mdash; <span style="color:#ff2a6d">Missing trailing comma</span></div>
+      </div>
+      <div class="statusbar">
+        <span><span class="accent">&#9679;</span> emerald-synth &bull; <span class="git-modified">feat/recolor-fg-emerald</span> &bull; JSON</span>
+        <span>Ln 10, Col 28 &bull; UTF-8 &bull; 2 spaces</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Syntax TypeScript -->
+<div class="zed" style="width:800px">
+  <div style="background:#2b1451; padding:4px 14px; font-size:11px; color:#8d73af">TypeScript syntax sample</div>
+  <div style="padding:12px 18px; font-size:13px; line-height:1.7">
+    <div><span class="kw">import</span> <span class="punc">{</span> <span class="ty">Theme</span> <span class="punc">}</span> <span class="kw">from</span> <span class="str">"./types"</span><span class="punc">;</span></div>
+    <div></div>
+    <div><span class="cmt">// Generate from palette.toml</span></div>
+    <div><span class="kw">export</span> <span class="kw">function</span> <span class="fn">generate</span><span class="punc">(</span><span class="var">name</span><span class="punc">:</span> <span class="ty">string</span><span class="punc">)</span><span class="punc">:</span> <span class="ty">Theme</span> <span class="punc">{</span></div>
+    <div>  <span class="kw">const</span> <span class="var">hex</span> <span class="op">=</span> <span class="str">"#00ffcc"</span><span class="punc">;</span></div>
+    <div>  <span class="kw">const</span> <span class="var">esc</span> <span class="op">=</span> <span class="str">"line 1<span class="str-esc">\n</span>line 2"</span><span class="punc">;</span></div>
+    <div>  <span class="kw">const</span> <span class="var">count</span> <span class="op">=</span> <span class="num">42</span><span class="punc">;</span></div>
+    <div>  <span class="kw">return</span> <span class="punc">{</span> <span class="prop">name</span><span class="punc">,</span> <span class="prop">hex</span><span class="punc">,</span> <span class="prop">count</span> <span class="punc">};</span></div>
+    <div><span class="punc">}</span></div>
+    <div></div>
+    <div><span class="kw">const</span> <span class="var">el</span> <span class="op">=</span> <span class="punc">&lt;</span><span class="tag">div</span> <span class="prop">className</span><span class="op">=</span><span class="str">"card"</span><span class="punc">&gt;</span><span class="punc">{</span><span class="var">name</span><span class="punc">}</span><span class="punc">&lt;/</span><span class="tag">div</span><span class="punc">&gt;;</span></div>
+  </div>
+</div>
+
+</body>
+</html>
