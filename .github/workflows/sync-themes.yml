@@ -64,6 +64,9 @@ jobs:
           rm -rf target/colors/ target/lua/
           cp -r monorepo/nvim/colors/ target/colors/
           cp -r monorepo/nvim/lua/ target/lua/
+          # Screenshot and sample
+          cp monorepo/nvim/screenshot.png target/screenshot.png
+          cp monorepo/nvim/sample.lua target/sample.lua
           # README
           cp monorepo/nvim/README.md target/README.md
           # LICENSE from monorepo root
